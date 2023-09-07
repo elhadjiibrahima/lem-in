@@ -1,5 +1,3 @@
-// readfile/readfile.go
-
 package readfile
 
 import (
