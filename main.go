@@ -11,7 +11,7 @@ func main() {
 	// Vérifie si un argument (nom de fichier) est fourni
 	if len(os.Args) != 2 {
 		fmt.Println("Error: missing filename")
-		fmt.Println("USAGE: go run main.go example00.txt")
+		fmt.Println("USAGE: go run . example00.txt")
 		return
 	}
 
@@ -36,11 +36,8 @@ func main() {
 	sendAnts := controllers.SendAnts(ants, data, bestCombPaths)
 
 	// Affiche les mouvements des fourmis
-	turns := 0
 	for _, v := range sendAnts {
 		fmt.Println(v)
-		turns++
 	}
-	fmt.Println()
-	fmt.Printf("Turns number: %v\n", turns)
+
 }

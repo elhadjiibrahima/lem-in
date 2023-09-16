@@ -48,12 +48,27 @@ func ParseData(data []string) (models.LemInData, models.Ants) {
 			lemIn.Links[to] = append(lemIn.Links[to], from)
 		} else if strings.Contains(data[i], " ") {
 			room := strings.Split(data[i], " ")
-			v := room[0]
-			if strings.HasPrefix(v, "#") {
-				fmt.Printf("Nom de salle invalide : %s", v)
-				os.Exit(1)
+			if len(room) == 3 {
+				v := room[0]
+				if strings.HasPrefix(v, "#") {
+					fmt.Printf("Nom de salle invalide : %s", v)
+					os.Exit(1)
+				}
+				x, err := strconv.Atoi(room[1])
+				y, err1 := strconv.Atoi(room[2])
+				if err1 != nil || err != nil {
+					fmt.Println("les coordonnée sont invalid")
+					os.Exit(1)
+				}
+				lemIn.X = x
+				lemIn.Y = y
+				// Vérifier si le nom de la salle est unique
+				if RoomAlready(lemIn.Rooms, v) {
+					fmt.Printf("Nom de salle déjà utilisé : %s\n", v)
+					os.Exit(1)
+				}
+				lemIn.Rooms = append(lemIn.Rooms, v)
 			}
-			lemIn.Rooms = append(lemIn.Rooms, v)
 		}
 	}
 	return lemIn, ant
@@ -84,4 +99,12 @@ func ReadFile(filePath string) []string {
 	}
 
 	return fileLines
+}
+func RoomAlready(rooms []string, name string) bool {
+	for _, room := range rooms {
+		if room == name {
+			return true
+		}
+	}
+	return false
 }

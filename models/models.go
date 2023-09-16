@@ -5,6 +5,7 @@ type LemInData struct {
 	End   string
 	Links map[string][]string
 	Rooms []string
+	X, Y  int
 }
 
 type Ants struct {
